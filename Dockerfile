@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:latest as build
 
 RUN apk add --no-cache \
     curl \
@@ -20,4 +20,14 @@ ADD . /src
 
 WORKDIR /src
 
-ENTRYPOINT [ "hugo", "server", "--port", "3000" ]
+RUN hugo
+
+FROM ubuntu:18.04
+
+COPY --from=build /src/dist /src/dist
+
+RUN apt-get update && apt-get install -y python3
+
+WORKDIR /src/dist
+
+ENTRYPOINT python3 -m http.server 3000
