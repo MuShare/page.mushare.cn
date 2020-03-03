@@ -24,10 +24,10 @@ RUN hugo
 
 FROM ubuntu:18.04
 
-COPY --from=build /src/dist /src/dist
+COPY --from=build /src/public /src/public
 
 RUN apt-get update && apt-get install -y python3
 
-WORKDIR /src/dist
+WORKDIR /src/public
 
 ENTRYPOINT python3 -m http.server 3000
