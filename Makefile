@@ -18,12 +18,12 @@ docker-clean:
 	docker rmi $(shell docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null || true
 
 check-version-tag:
-	git pull --tags
-	if git --no-pager tag --list | grep $(VERSION) -q ; then echo "$(VERSION) already exsits"; exit 1; fi
+	git pull origin master --tags
+	if git --no-pager tag --list | grep $(VERSION) -q ; then echo "$(VERSION) already exists"; exit 1; fi
 
 update-tag:
-	git pull --tags
-	if git --no-pager tag --list | grep $(VERSION) -q ; then echo "$(VERSION) already exsits"; exit 1; fi
+	git pull origin master --tags
+	if git --no-pager tag --list | grep $(VERSION) -q ; then echo "$(VERSION) already exists"; exit 1; fi
 	git tag $(VERSION)
 	git push origin $(VERSION)
 
